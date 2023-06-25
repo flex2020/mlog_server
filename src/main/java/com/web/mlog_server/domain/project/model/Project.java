@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @SequenceGenerator(
@@ -34,4 +36,6 @@ public class Project {
     @Column(length = 500, nullable = false)
     private String learning;
 
+    @OneToMany(mappedBy = "project")
+    private List<ProjectFile> fileList = new ArrayList<>();
 }

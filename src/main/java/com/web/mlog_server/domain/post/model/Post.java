@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @SequenceGenerator(
         name =  "POST_SEQ_GEN", // 시퀀스 제너레이터 이름
@@ -25,4 +28,7 @@ public class Post {
     @Column(nullable = false)
     @CreationTimestamp
     private LocalDateTime writingTime;
+
+    @OneToMany(mappedBy = "post")
+    List<PostFile> fileList = new ArrayList<>();
 }
