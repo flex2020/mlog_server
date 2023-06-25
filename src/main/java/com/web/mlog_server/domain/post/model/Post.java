@@ -19,7 +19,7 @@ public class Post {
     @Column(length = 100, nullable = false)
     private String title;
 
-    @Column(columnDefinition = "LONG TEXT", nullable = false)
+    @Column(columnDefinition = "LONGTEXT", nullable = false)
     private String content;
 
     @Column(nullable = false)
