@@ -16,7 +16,7 @@ import java.util.List;
 )
 public class Project {
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PROJECT_SEQ_GEN")
-    private int id;
+    private Integer id;
 
     @Column(length = 100, nullable = false)
     private String title;

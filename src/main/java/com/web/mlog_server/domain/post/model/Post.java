@@ -17,7 +17,7 @@ import java.util.List;
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "POST_SEQ_GEN")
-    private int id;
+    private Integer id;
 
     @Column(length = 100, nullable = false)
     private String title;
