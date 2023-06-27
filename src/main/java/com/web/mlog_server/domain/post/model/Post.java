@@ -30,5 +30,8 @@ public class Post {
     private LocalDateTime writingTime;
 
     @OneToMany(mappedBy = "post")
-    List<PostFile> fileList = new ArrayList<>();
+    private List<PostFile> fileList = new ArrayList<>();
+
+    @Column(nullable = false)
+    private Boolean visible;
 }

@@ -38,4 +38,7 @@ public class Project {
 
     @OneToMany(mappedBy = "project")
     private List<ProjectFile> fileList = new ArrayList<>();
+
+    @Column(nullable = false)
+    private Boolean visible;
 }
