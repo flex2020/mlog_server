@@ -25,6 +25,9 @@ public class Post {
     @Column(columnDefinition = "LONGTEXT", nullable = false)
     private String content;
 
+    @Column
+    private String thumbnail;
+
     @Column(nullable = false)
     @CreationTimestamp
     private LocalDateTime writingTime;
