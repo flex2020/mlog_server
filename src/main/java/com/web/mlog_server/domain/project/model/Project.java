@@ -23,6 +23,7 @@ public class Project {
 
     @Column(columnDefinition = "LONGTEXT", nullable = false)
     private String content;
+    private String thumbnail;
 
     @Column(length = 500, nullable = false)
     private String summary;
