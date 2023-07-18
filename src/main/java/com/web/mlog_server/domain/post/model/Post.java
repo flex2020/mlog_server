@@ -1,5 +1,6 @@
 package com.web.mlog_server.domain.post.model;
 
+import com.web.mlog_server.domain.post.PostDto;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -37,4 +38,13 @@ public class Post {
 
     @Column(nullable = false)
     private Boolean visible;
+
+    public PostDto.ListDto toListDto() {
+        return PostDto.ListDto.builder()
+                .id(id)
+                .thumbnail(thumbnail)
+                .title(title)
+                .writingTime(writingTime)
+                .build();
+    }
 }

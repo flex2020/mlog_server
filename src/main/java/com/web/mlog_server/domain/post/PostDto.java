@@ -1,5 +1,6 @@
 package com.web.mlog_server.domain.post;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -12,6 +13,14 @@ public class PostDto {
         private String title;
         private String thumbnail;
         private LocalDateTime writingTime;
+
+        @Builder
+        public ListDto(Integer id, String title, String thumbnail, LocalDateTime writingTime) {
+            this.id = id;
+            this.title = title;
+            this.thumbnail = thumbnail;
+            this.writingTime = writingTime;
+        }
     }
     @Data
     public static class DetailDto {
