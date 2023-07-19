@@ -3,10 +3,7 @@ package com.web.mlog_server.domain.post;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,5 +21,10 @@ public class PostController {
     @GetMapping("")
     public List<PostDto.ListDto> getPostList(@RequestBody int page, Pageable pageable) {
         return postService.getPostList(pageable);
+    }
+
+    @PostMapping("")
+    public boolean postAdd(@RequestBody PostDto.AddDto dto) {
+        return postService.addPost(dto);
     }
 }

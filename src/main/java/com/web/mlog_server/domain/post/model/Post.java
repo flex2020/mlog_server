@@ -2,6 +2,7 @@ package com.web.mlog_server.domain.post.model;
 
 import com.web.mlog_server.domain.post.PostDto;
 import jakarta.persistence.*;
+import lombok.Builder;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -33,11 +34,21 @@ public class Post {
     @CreationTimestamp
     private LocalDateTime writingTime;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PostFile> fileList = new ArrayList<>();
 
     @Column(nullable = false)
     private Boolean visible;
+    @Builder
+    public Post(Integer id, String title, String content, String thumbnail, LocalDateTime writingTime, List<PostFile> fileList, Boolean visible) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.thumbnail = thumbnail;
+        this.writingTime = writingTime;
+        this.fileList = fileList;
+        this.visible = visible;
+    }
 
     public PostDto.ListDto toListDto() {
         return PostDto.ListDto.builder()

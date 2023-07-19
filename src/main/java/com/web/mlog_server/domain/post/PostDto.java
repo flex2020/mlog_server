@@ -1,5 +1,6 @@
 package com.web.mlog_server.domain.post;
 
+import com.web.mlog_server.domain.post.model.Post;
 import lombok.Builder;
 import lombok.Data;
 
@@ -36,6 +37,16 @@ public class PostDto {
         private String content;
         private String thumbnail;
         private Boolean visible;
+
+        public Post toEntity() {
+            return Post.builder()
+                    .title(title)
+                    .content(content)
+                    .writingTime(LocalDateTime.now())
+                    .thumbnail(thumbnail)
+                    .visible(visible)
+                    .build();
+        }
     }
     @Data
     public static class DeleteDto {
