@@ -58,4 +58,13 @@ public class Post {
                 .writingTime(writingTime)
                 .build();
     }
+
+    public PostDto.DetailDto toDetailDto() {
+        return PostDto.DetailDto.builder()
+                .id(id)
+                .title(title)
+                .content(content)
+                .writingTime(writingTime)
+                .build();
+    }
 }

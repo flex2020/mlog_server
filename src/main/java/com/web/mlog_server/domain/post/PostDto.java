@@ -29,7 +29,14 @@ public class PostDto {
         private String title;
         private String content;
         private LocalDateTime writingTime;
-        private List<String> fileList;
+
+        @Builder
+        public DetailDto(Integer id, String title, String content, LocalDateTime writingTime) {
+            this.id = id;
+            this.title = title;
+            this.content = content;
+            this.writingTime = writingTime;
+        }
     }
     @Data
     public static class AddDto {

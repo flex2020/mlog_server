@@ -25,7 +25,11 @@ public class PostService {
                 .stream().map(Post::toListDto)
                 .toList();
     }
-
+    public PostDto.DetailDto getPostDetail(int id) {
+        return postRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 포스트입니다."))
+                .toDetailDto();
+    }
     public boolean addPost(PostDto.AddDto dto) {
         try {
             postRepository.save(dto.toEntity());
