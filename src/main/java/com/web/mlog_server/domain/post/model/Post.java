@@ -50,6 +50,9 @@ public class Post {
         this.visible = visible;
     }
 
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
     public PostDto.ListDto toListDto() {
         return PostDto.ListDto.builder()
                 .id(id)

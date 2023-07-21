@@ -31,4 +31,9 @@ public class PostController {
     public boolean postAdd(@RequestBody PostDto.AddDto dto) {
         return postService.addPost(dto);
     }
+
+    @DeleteMapping("")
+    public boolean postDelete(@RequestBody PostDto.DeleteDto dto) {
+        return postService.deletePost(dto.getId());
+    }
 }
