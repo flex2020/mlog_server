@@ -52,4 +52,16 @@ public class PostService {
         }
         return true;
     }
+
+    @Transactional
+    public boolean modifyPost(PostDto.ModifyDto dto) {
+        try {
+            Post post = postRepository.findById(dto.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 포스트입니다."));
+            post.modifyPost(dto);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "포스트 수정에 실패하였습니다.");
+        }
+        return true;
+    }
 }

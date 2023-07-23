@@ -70,4 +70,10 @@ public class Post {
                 .writingTime(writingTime)
                 .build();
     }
+
+    public void modifyPost(PostDto.ModifyDto dto) {
+        this.title = dto.getTitle();
+        this.content = dto.getContent();
+        this.visible = dto.getVisible();
+    }
 }
