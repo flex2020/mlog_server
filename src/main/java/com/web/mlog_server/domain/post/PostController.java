@@ -20,7 +20,7 @@ public class PostController {
      * */
     @GetMapping("")
     public List<PostDto.ListDto> getPostList(@RequestBody int page, Pageable pageable) {
-        return postService.getPostList(pageable);
+        return postService.getPostList(page, pageable);
     }
     @GetMapping("/{id}")
     public PostDto.DetailDto getPostDetail(@PathVariable("id") int id) {

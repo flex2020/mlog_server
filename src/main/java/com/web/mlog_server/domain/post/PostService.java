@@ -5,7 +5,9 @@ import com.web.mlog_server.domain.post.model.PostFileRepository;
 import com.web.mlog_server.domain.post.model.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +22,8 @@ public class PostService {
     private final PostRepository postRepository;
     private final PostFileRepository postFileRepository;
 
-    public List<PostDto.ListDto> getPostList(Pageable pageable) {
+    public List<PostDto.ListDto> getPostList(int page, Pageable pageable) {
+        pageable = PageRequest.of(page, 15, Sort.by(Sort.Direction.DESC, "writingTime"));
         return postRepository.findAll(pageable)
                 .getContent()
                 .stream().map(Post::toListDto)
