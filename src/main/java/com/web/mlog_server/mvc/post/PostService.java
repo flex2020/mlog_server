@@ -1,8 +1,10 @@
-package com.web.mlog_server.domain.post;
+package com.web.mlog_server.mvc.post;
 
-import com.web.mlog_server.domain.post.model.Post;
-import com.web.mlog_server.domain.post.model.PostFileRepository;
-import com.web.mlog_server.domain.post.model.PostRepository;
+import com.web.mlog_server.common.FileUtil;
+import com.web.mlog_server.mvc.post.model.Post;
+import com.web.mlog_server.mvc.post.model.PostFile;
+import com.web.mlog_server.mvc.post.model.PostFileRepository;
+import com.web.mlog_server.mvc.post.model.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -11,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -21,6 +24,7 @@ import java.util.List;
 public class PostService {
     private final PostRepository postRepository;
     private final PostFileRepository postFileRepository;
+    private final FileUtil fileUtil;
 
     public List<PostDto.ListDto> getPostList(int page, Pageable pageable) {
         pageable = PageRequest.of(page, 15, Sort.by(Sort.Direction.DESC, "writingTime"));
@@ -66,5 +70,13 @@ public class PostService {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "포스트 수정에 실패하였습니다.");
         }
         return true;
+    }
+
+    public String uploadFile(MultipartFile file) {
+        PostFile postFile = fileUtil.getPostFile(file);
+        postFileRepository.save(postFile);
+        fileUtil.uploadFile(file, postFile.getFileName());
+
+        return postFile.getFileName();
     }
 }

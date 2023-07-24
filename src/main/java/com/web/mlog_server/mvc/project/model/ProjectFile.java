@@ -1,9 +1,9 @@
-package com.web.mlog_server.domain.post.model;
+package com.web.mlog_server.mvc.project.model;
 
 import jakarta.persistence.*;
 
 @Entity
-public class PostFile {
+public class ProjectFile {
     @Id @Column(length = 50)
     private String uuid;
 
@@ -20,7 +20,7 @@ public class PostFile {
     private Long fileSize;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
-    private Post post;
+    @JoinColumn(name = "project_id")
+    private Project project;
 
 }

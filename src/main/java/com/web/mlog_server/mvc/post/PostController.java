@@ -1,9 +1,10 @@
-package com.web.mlog_server.domain.post;
+package com.web.mlog_server.mvc.post;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -40,5 +41,10 @@ public class PostController {
     @PutMapping("")
     public boolean postModify(@RequestBody PostDto.ModifyDto dto) {
         return postService.modifyPost(dto);
+    }
+
+    @PostMapping("/file")
+    public String fileUpload(MultipartFile file) {
+        return postService.uploadFile(file);
     }
 }

@@ -1,4 +1,4 @@
-package com.web.mlog_server.domain.project;
+package com.web.mlog_server.mvc.project;
 
 import lombok.Data;
 

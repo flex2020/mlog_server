@@ -1,4 +1,4 @@
-package com.web.mlog_server.domain.post.model;
+package com.web.mlog_server.mvc.post.model;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

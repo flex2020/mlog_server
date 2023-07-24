@@ -1,8 +1,9 @@
-package com.web.mlog_server.domain.post.model;
+package com.web.mlog_server.mvc.admin.model;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PostFileRepository extends JpaRepository<PostFile, String> {
+public interface AdminRepository extends JpaRepository<Admin, String> {
+
 }

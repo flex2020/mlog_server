@@ -1,6 +1,6 @@
-package com.web.mlog_server.domain.post.model;
+package com.web.mlog_server.mvc.post.model;
 
-import com.web.mlog_server.domain.post.PostDto;
+import com.web.mlog_server.mvc.post.PostDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import org.hibernate.annotations.CreationTimestamp;

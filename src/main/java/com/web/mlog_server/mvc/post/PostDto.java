@@ -1,11 +1,10 @@
-package com.web.mlog_server.domain.post;
+package com.web.mlog_server.mvc.post;
 
-import com.web.mlog_server.domain.post.model.Post;
+import com.web.mlog_server.mvc.post.model.Post;
 import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class PostDto {
     @Data

@@ -1,9 +1,7 @@
-package com.web.mlog_server.domain.project.model;
+package com.web.mlog_server.mvc.project.model;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

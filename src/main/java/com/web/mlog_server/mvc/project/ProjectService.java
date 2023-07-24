@@ -1,7 +1,7 @@
-package com.web.mlog_server.domain.project;
+package com.web.mlog_server.mvc.project;
 
-import com.web.mlog_server.domain.project.model.ProjectFileRepository;
-import com.web.mlog_server.domain.project.model.ProjectRepository;
+import com.web.mlog_server.mvc.project.model.ProjectFileRepository;
+import com.web.mlog_server.mvc.project.model.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
