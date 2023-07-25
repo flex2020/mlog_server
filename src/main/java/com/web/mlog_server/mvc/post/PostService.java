@@ -26,6 +26,13 @@ public class PostService {
     private final PostFileRepository postFileRepository;
     private final FileUtil fileUtil;
 
+    public List<PostDto.ListDto> getPreviewPost() {
+        return postRepository.getPreviewPost()
+                .stream()
+                .map(Post::toListDto)
+                .toList();
+    }
+
     public List<PostDto.ListDto> getPostList(int page, Pageable pageable) {
         pageable = PageRequest.of(page, 15, Sort.by(Sort.Direction.DESC, "writingTime"));
         return postRepository.findAll(pageable)

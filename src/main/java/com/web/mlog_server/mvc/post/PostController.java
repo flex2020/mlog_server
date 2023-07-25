@@ -43,6 +43,11 @@ public class PostController {
         return postService.modifyPost(dto);
     }
 
+    @GetMapping("/preview")
+    public List<PostDto.ListDto> getPreviewPost() {
+        return postService.getPreviewPost();
+    }
+
     @PostMapping("/file")
     public String fileUpload(MultipartFile file) {
         return postService.uploadFile(file);
