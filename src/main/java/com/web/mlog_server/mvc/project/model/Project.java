@@ -1,5 +1,6 @@
 package com.web.mlog_server.mvc.project.model;
 
+import com.web.mlog_server.mvc.project.ProjectDto;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -40,4 +41,14 @@ public class Project {
 
     @Column(nullable = false)
     private Boolean visible;
+
+    public ProjectDto.ListDto toListDto() {
+        return ProjectDto.ListDto.builder()
+                .id(id)
+                .title(title)
+                .skills(skills)
+                .summary(summary)
+                .thumbnail(thumbnail)
+                .build();
+    }
 }

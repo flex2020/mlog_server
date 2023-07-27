@@ -1,5 +1,6 @@
 package com.web.mlog_server.mvc.project;
 
+import lombok.Builder;
 import lombok.Data;
 
 public class ProjectDto {
@@ -10,6 +11,14 @@ public class ProjectDto {
         private String thumbnail;
         private String summary;
         private String skills;
+        @Builder
+        public ListDto(Integer id, String title, String thumbnail, String summary, String skills) {
+            this.id = id;
+            this.title = title;
+            this.thumbnail = thumbnail;
+            this.summary = summary;
+            this.skills = skills;
+        }
     }
     @Data
     public static class DetailDto {
