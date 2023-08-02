@@ -1,5 +1,6 @@
 package com.web.mlog_server.mvc.project;
 
+import com.web.mlog_server.mvc.project.model.Project;
 import lombok.Builder;
 import lombok.Data;
 
@@ -38,7 +39,21 @@ public class ProjectDto {
         private String duration;
         private String skills;
         private String learning;
+        private String summary;
         private Boolean visible;
+
+        public Project toEntity() {
+            return Project.builder()
+                    .title(title)
+                    .content(content)
+                    .thumbnail(thumbnail)
+                    .summary(summary)
+                    .duration(duration)
+                    .skills(skills)
+                    .learning(learning)
+                    .visible(visible)
+                    .build();
+        }
     }
     @Data
     public static class DeleteDto {
