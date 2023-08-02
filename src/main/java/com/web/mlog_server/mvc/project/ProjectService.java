@@ -30,6 +30,11 @@ public class ProjectService {
                 .map(Project::toListDto)
                 .toList();
     }
+    public ProjectDto.DetailDto getProjectDetail(Integer id) {
+        return projectRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 프로젝트입니다."))
+                .toDetailDto();
+    }
     public boolean addProject(ProjectDto.AddDto dto) {
         try {
             projectRepository.save(dto.toEntity());

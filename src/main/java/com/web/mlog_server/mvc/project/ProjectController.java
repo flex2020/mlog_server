@@ -22,6 +22,10 @@ public class ProjectController {
     public List<ProjectDto.ListDto> projectList() {
         return projectService.getProjectList();
     }
+    @GetMapping("/{id}")
+    public ProjectDto.DetailDto projectDetail(@PathVariable("id") Integer id) {
+        return projectService.getProjectDetail(id);
+    }
     @PostMapping("")
     public boolean projectAdd(@RequestBody ProjectDto.AddDto dto) {
         return projectService.addProject(dto);
