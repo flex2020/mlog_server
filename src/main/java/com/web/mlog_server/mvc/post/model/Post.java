@@ -3,6 +3,7 @@ package com.web.mlog_server.mvc.post.model;
 import com.web.mlog_server.mvc.post.PostDto;
 import jakarta.persistence.*;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@NoArgsConstructor
 @SequenceGenerator(
         name =  "POST_SEQ_GEN", // 시퀀스 제너레이터 이름
         sequenceName = "POST_SEQ", // 시퀀스 이름
