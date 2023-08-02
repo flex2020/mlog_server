@@ -26,4 +26,8 @@ public class ProjectController {
     public boolean projectAdd(@RequestBody ProjectDto.AddDto dto) {
         return projectService.addProject(dto);
     }
+    @DeleteMapping("")
+    public boolean projectDelete(@RequestBody ProjectDto.DeleteDto dto) {
+        return projectService.deleteProject(dto);
+    }
 }

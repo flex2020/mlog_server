@@ -38,4 +38,14 @@ public class ProjectService {
         }
         return true;
     }
+    public boolean deleteProject(ProjectDto.DeleteDto dto) {
+        try {
+            Project project = projectRepository.findById(dto.getId())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 프로젝트입니다."));
+            project.setVisible(false);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "프로젝트 삭제에 실패했습니다.");
+        }
+        return true;
+    }
 }
