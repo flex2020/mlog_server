@@ -34,4 +34,8 @@ public class ProjectController {
     public boolean projectDelete(@RequestBody ProjectDto.DeleteDto dto) {
         return projectService.deleteProject(dto);
     }
+    @PutMapping("")
+    public boolean projectModify(@RequestBody ProjectDto.ModifyDto dto) {
+        return projectService.modifyProject(dto);
+    }
 }

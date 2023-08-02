@@ -80,6 +80,16 @@ public class Project {
                 .build();
     }
 
+    public void modifyProject(ProjectDto.ModifyDto dto) {
+        id = dto.getId();
+        title = dto.getTitle();
+        content = dto.getContent();
+        thumbnail = dto.getThumbnail();
+        duration = dto.getDuration();
+        skills = dto.getSkills();
+        learning = dto.getLearning();
+        visible = dto.getVisible();
+    }
     public void setVisible(Boolean visible) {
         this.visible = visible;
     }
