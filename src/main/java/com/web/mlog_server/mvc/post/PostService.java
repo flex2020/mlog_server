@@ -27,7 +27,7 @@ public class PostService {
     private final FileUtil fileUtil;
 
     public List<PostDto.ListDto> getPreviewPost() {
-        return postRepository.getPreviewPost()
+        return postRepository.findTop3ByOrderByIdDesc()
                 .stream()
                 .map(Post::toListDto)
                 .toList();
