@@ -68,6 +68,17 @@ public class Project {
                 .thumbnail(thumbnail)
                 .build();
     }
+    public ProjectDto.DetailDto toDetailDto() {
+        return ProjectDto.DetailDto.builder()
+                .id(id)
+                .title(title)
+                .content(content)
+                .summary(summary)
+                .duration(duration)
+                .skills(skills)
+                .learning(learning)
+                .build();
+    }
 
     public void setVisible(Boolean visible) {
         this.visible = visible;
