@@ -30,6 +30,17 @@ public class ProjectDto {
         private String duration;
         private String skills;
         private String learning;
+
+        @Builder
+        public DetailDto(Integer id, String title, String content, String summary, String duration, String skills, String learning) {
+            this.id = id;
+            this.title = title;
+            this.content = content;
+            this.summary = summary;
+            this.duration = duration;
+            this.skills = skills;
+            this.learning = learning;
+        }
     }
     @Data
     public static class AddDto {
