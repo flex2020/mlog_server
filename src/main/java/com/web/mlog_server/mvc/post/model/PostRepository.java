@@ -11,8 +11,6 @@ import java.util.List;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Integer> {
     Page<Post> findAll(Pageable pageable);
-    @Query("select p " +
-            "from Post p " +
-            "limit 3")
-    List<Post> getPreviewPost();
+
+    List<Post> findTop3ByOrderByIdDesc();
 }
