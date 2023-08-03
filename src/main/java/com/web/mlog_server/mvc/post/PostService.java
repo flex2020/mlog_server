@@ -39,7 +39,7 @@ public class PostService {
                 .toList();
     }
     public PostDto.DetailDto getPostDetail(int id) {
-        return postRepository.findById(id)
+        return postRepository.findByIdAndVisibleIsTrue(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 포스트입니다."))
                 .toDetailDto();
     }
