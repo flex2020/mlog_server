@@ -15,13 +15,9 @@ import java.util.List;
 public class PostController {
     private final PostService postService;
 
-    /**
-     * 페이지를 body 로부터 받아 목록을 보여줌
-     *
-     * */
     @GetMapping("")
-    public List<PostDto.ListDto> getPostList(@RequestBody int page, Pageable pageable) {
-        return postService.getPostList(page, pageable);
+    public List<PostDto.ListDto> getPostList() {
+        return postService.getPostList();
     }
     @GetMapping("/{id}")
     public PostDto.DetailDto getPostDetail(@PathVariable("id") int id) {

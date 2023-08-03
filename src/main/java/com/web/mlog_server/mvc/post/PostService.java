@@ -27,16 +27,14 @@ public class PostService {
     private final FileUtil fileUtil;
 
     public List<PostDto.ListDto> getPreviewPost() {
-        return postRepository.findTop3ByOrderByIdDesc()
+        return postRepository.findTop3ByVisibleIsTrueOrderByIdDesc()
                 .stream()
                 .map(Post::toListDto)
                 .toList();
     }
 
-    public List<PostDto.ListDto> getPostList(int page, Pageable pageable) {
-        pageable = PageRequest.of(page, 15, Sort.by(Sort.Direction.DESC, "writingTime"));
-        return postRepository.findAll(pageable)
-                .getContent()
+    public List<PostDto.ListDto> getPostList() {
+        return postRepository.findAllByVisibleIsTrue()
                 .stream().map(Post::toListDto)
                 .toList();
     }
