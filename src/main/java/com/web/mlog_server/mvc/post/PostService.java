@@ -54,25 +54,26 @@ public class PostService {
     }
     @Transactional
     public boolean deletePost(int id) {
+        Post post = postRepository.findByIdAndVisibleIsTrue(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 포스트입니다."))
         try {
-            postRepository.findById(id)
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 포스트입니다."))
-                    .setVisible(false);
+            post.setVisible(false);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "포스트 삭제에 실패하였습니다.");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "포스트 수정에 실패했습니다.");
         }
         return true;
     }
 
     @Transactional
     public boolean modifyPost(PostDto.ModifyDto dto) {
+        Post post = postRepository.findByIdAndVisibleIsTrue(dto.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 포스트입니다."));
         try {
-            Post post = postRepository.findById(dto.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 포스트입니다."));
             post.modifyPost(dto);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "포스트 수정에 실패하였습니다.");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "포스트 수정에 실패했습니다.");
         }
         return true;
     }
