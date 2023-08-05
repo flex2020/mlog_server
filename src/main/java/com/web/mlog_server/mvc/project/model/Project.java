@@ -66,6 +66,7 @@ public class Project {
                 .skills(skills)
                 .summary(summary)
                 .thumbnail(thumbnail)
+                .learning(learning)
                 .build();
     }
     public ProjectDto.DetailDto toDetailDto() {
