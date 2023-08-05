@@ -63,6 +63,7 @@ public class Project {
         return ProjectDto.ListDto.builder()
                 .id(id)
                 .title(title)
+                .duration(duration)
                 .skills(skills)
                 .summary(summary)
                 .thumbnail(thumbnail)

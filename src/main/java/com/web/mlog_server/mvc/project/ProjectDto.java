@@ -13,14 +13,16 @@ public class ProjectDto {
         private String summary;
         private String skills;
         private String learning;
+        private String duration;
         @Builder
-        public ListDto(Integer id, String title, String thumbnail, String summary, String skills, String learning) {
+        public ListDto(Integer id, String title, String thumbnail, String summary, String skills, String learning, String duration) {
             this.id = id;
             this.title = title;
             this.thumbnail = thumbnail;
             this.summary = summary;
             this.skills = skills;
             this.learning = learning;
+            this.duration = duration;
         }
     }
     @Data
