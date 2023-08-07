@@ -20,7 +20,7 @@ public class ProjectService {
     private final ProjectFileRepository projectFileRepository;
 
     public List<ProjectDto.ListDto> getPreviewPost() {
-        return projectRepository.findTop3ByOrderByIdDesc()
+        return projectRepository.findTop3ByVisibleIsTrueOrderByIdDesc()
                 .stream()
                 .map(Project::toListDto)
                 .toList();
