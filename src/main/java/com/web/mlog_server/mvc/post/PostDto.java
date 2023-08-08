@@ -11,13 +11,15 @@ public class PostDto {
     public static class ListDto {
         private Integer id;
         private String title;
+        private String previewContent;
         private String thumbnail;
         private LocalDateTime writingTime;
 
         @Builder
-        public ListDto(Integer id, String title, String thumbnail, LocalDateTime writingTime) {
+        public ListDto(Integer id, String title, String previewContent, String thumbnail, LocalDateTime writingTime) {
             this.id = id;
             this.title = title;
+            this.previewContent = previewContent;
             this.thumbnail = thumbnail;
             this.writingTime = writingTime;
         }
@@ -41,6 +43,7 @@ public class PostDto {
     public static class AddDto {
         private String title;
         private String content;
+        private String previewContent;
         private String thumbnail;
         private Boolean visible;
 
@@ -48,6 +51,7 @@ public class PostDto {
             return Post.builder()
                     .title(title)
                     .content(content)
+                    .previewContent(previewContent)
                     .writingTime(LocalDateTime.now())
                     .thumbnail(thumbnail)
                     .visible(visible)
@@ -63,6 +67,7 @@ public class PostDto {
         private Integer id;
         private String title;
         private String content;
+        private String previewContent;
         private Boolean visible;
     }
 }

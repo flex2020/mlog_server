@@ -28,7 +28,8 @@ public class Post {
 
     @Column(columnDefinition = "LONGTEXT", nullable = false)
     private String content;
-
+    @Column(nullable = false)
+    private String previewContent;
     @Column
     private String thumbnail;
 
@@ -41,11 +42,13 @@ public class Post {
 
     @Column(nullable = false)
     private Boolean visible;
+
     @Builder
-    public Post(Integer id, String title, String content, String thumbnail, LocalDateTime writingTime, List<PostFile> fileList, Boolean visible) {
+    public Post(Integer id, String title, String content, String previewContent, String thumbnail, LocalDateTime writingTime, List<PostFile> fileList, Boolean visible) {
         this.id = id;
         this.title = title;
         this.content = content;
+        this.previewContent = previewContent;
         this.thumbnail = thumbnail;
         this.writingTime = writingTime;
         this.fileList = fileList;
@@ -60,6 +63,7 @@ public class Post {
                 .id(id)
                 .thumbnail(thumbnail)
                 .title(title)
+                .previewContent(previewContent)
                 .writingTime(writingTime)
                 .build();
     }
@@ -76,6 +80,7 @@ public class Post {
     public void modifyPost(PostDto.ModifyDto dto) {
         this.title = dto.getTitle();
         this.content = dto.getContent();
+        this.previewContent = dto.getPreviewContent();
         this.visible = dto.getVisible();
     }
 }
