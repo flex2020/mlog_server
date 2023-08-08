@@ -34,7 +34,7 @@ public class PostService {
     }
 
     public List<PostDto.ListDto> getPostList() {
-        return postRepository.findAllByVisibleIsTrue()
+        return postRepository.findAllByVisibleIsTrueOrderByIdDesc()
                 .stream().map(Post::toListDto)
                 .toList();
     }

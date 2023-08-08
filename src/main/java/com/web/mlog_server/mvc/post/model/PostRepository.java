@@ -12,6 +12,6 @@ import java.util.Optional;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Integer> {
     List<Post> findTop3ByVisibleIsTrueOrderByIdDesc();
-    List<Post> findAllByVisibleIsTrue();
+    List<Post> findAllByVisibleIsTrueOrderByIdDesc();
     Optional<Post> findByIdAndVisibleIsTrue(Integer id);
 }
