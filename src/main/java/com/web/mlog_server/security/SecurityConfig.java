@@ -34,7 +34,7 @@ public class SecurityConfig {
                 })
                 .logout(httpSecurityLogoutConfigurer -> {
                     httpSecurityLogoutConfigurer
-                            .logoutUrl("/logout")
+                            .logoutUrl("/admin/logout")
                             .logoutSuccessHandler(((request, response, authentication) -> {
                                  response.setStatus(HttpStatus.OK.value());
                             }))
@@ -47,6 +47,7 @@ public class SecurityConfig {
                                     .requestMatchers(HttpMethod.GET, "/post", "/post/**", "/project", "/project/**").permitAll()
                                     .requestMatchers(HttpMethod.POST, "/admin/login").permitAll()
                                     // 관리자 로그인한 사용자만 가능
+                                    .requestMatchers(HttpMethod.GET).hasAnyRole("ADMIN")
                                     .requestMatchers(HttpMethod.DELETE).hasAnyRole("ADMIN")
                                     .requestMatchers(HttpMethod.POST).hasAnyRole("ADMIN")
                                     .requestMatchers(HttpMethod.PUT).hasAnyRole("ADMIN")
