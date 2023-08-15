@@ -30,7 +30,7 @@ public class PostController {
     }
 
     @DeleteMapping("")
-    public boolean postDelete(@RequestBody PostDto.DeleteDto dto) {
+    public boolean changeVisibility(@RequestBody PostDto.DeleteDto dto) {
         return postService.deletePost(dto.getId());
     }
 

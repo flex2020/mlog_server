@@ -57,7 +57,7 @@ public class PostService {
         Post post = postRepository.findByIdAndVisibleIsTrue(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 포스트입니다."));
         try {
-            post.setVisible(false);
+            post.setVisible(!post.getVisible());
         } catch (Exception e) {
             e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "포스트 수정에 실패했습니다.");
