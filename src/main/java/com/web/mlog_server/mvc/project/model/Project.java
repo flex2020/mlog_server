@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +40,9 @@ public class Project {
     @Column(length = 500, nullable = false)
     private String learning;
 
+    @Column(nullable = false)
+    private LocalDateTime writingTime;
+
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProjectFile> fileList = new ArrayList<>();
 
@@ -46,7 +50,7 @@ public class Project {
     private Boolean visible;
 
     @Builder
-    public Project(Integer id, String title, String content, String thumbnail, String summary, String duration, String skills, String learning, List<ProjectFile> fileList, Boolean visible) {
+    public Project(Integer id, String title, String content, String thumbnail, String summary, String duration, String skills, String learning, LocalDateTime writingTime, List<ProjectFile> fileList, Boolean visible) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -55,9 +59,11 @@ public class Project {
         this.duration = duration;
         this.skills = skills;
         this.learning = learning;
+        this.writingTime = writingTime;
         this.fileList = fileList;
         this.visible = visible;
     }
+
 
     public ProjectDto.ListDto toListDto() {
         return ProjectDto.ListDto.builder()
@@ -68,6 +74,7 @@ public class Project {
                 .summary(summary)
                 .thumbnail(thumbnail)
                 .learning(learning)
+                .writingTime(writingTime)
                 .build();
     }
     public ProjectDto.DetailDto toDetailDto() {

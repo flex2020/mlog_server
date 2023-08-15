@@ -4,6 +4,8 @@ import com.web.mlog_server.mvc.project.model.Project;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 public class ProjectDto {
     @Data
     public static class ListDto {
@@ -14,8 +16,9 @@ public class ProjectDto {
         private String skills;
         private String learning;
         private String duration;
+        private LocalDateTime writingTime;
         @Builder
-        public ListDto(Integer id, String title, String thumbnail, String summary, String skills, String learning, String duration) {
+        public ListDto(Integer id, String title, String thumbnail, String summary, String skills, String learning, String duration, LocalDateTime writingTime) {
             this.id = id;
             this.title = title;
             this.thumbnail = thumbnail;
@@ -23,6 +26,7 @@ public class ProjectDto {
             this.skills = skills;
             this.learning = learning;
             this.duration = duration;
+            this.writingTime = writingTime;
         }
     }
     @Data
