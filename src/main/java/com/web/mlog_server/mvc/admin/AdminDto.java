@@ -1,4 +1,4 @@
-package com.web.mlog_server.mvc.admin.model;
+package com.web.mlog_server.mvc.admin;
 
 import lombok.Data;
 
