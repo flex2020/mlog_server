@@ -54,7 +54,7 @@ public class PostService {
     }
     @Transactional
     public boolean deletePost(int id) {
-        Post post = postRepository.findByIdAndVisibleIsTrue(id)
+        Post post = postRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 포스트입니다."));
         try {
             post.setVisible(!post.getVisible());
@@ -67,7 +67,7 @@ public class PostService {
 
     @Transactional
     public boolean modifyPost(PostDto.ModifyDto dto) {
-        Post post = postRepository.findByIdAndVisibleIsTrue(dto.getId())
+        Post post = postRepository.findById(dto.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 포스트입니다."));
         try {
             post.modifyPost(dto);
