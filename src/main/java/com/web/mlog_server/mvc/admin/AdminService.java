@@ -2,6 +2,10 @@ package com.web.mlog_server.mvc.admin;
 
 import com.web.mlog_server.mvc.admin.model.Admin;
 import com.web.mlog_server.mvc.admin.model.AdminRepository;
+import com.web.mlog_server.mvc.post.model.Post;
+import com.web.mlog_server.mvc.post.model.PostRepository;
+import com.web.mlog_server.mvc.project.model.Project;
+import com.web.mlog_server.mvc.project.model.ProjectRepository;
 import com.web.mlog_server.security.JwtProvider;
 import com.web.mlog_server.security.TokenInfo;
 import lombok.RequiredArgsConstructor;
@@ -15,12 +19,15 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class AdminService {
     private final AdminRepository adminRepository;
+    private final PostRepository postRepository;
+    private final ProjectRepository projectRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtProvider jwtProvider;
 
@@ -37,5 +44,18 @@ public class AdminService {
         //--- 3. 인증 정보를 기반으로 JWT 생성
         TokenInfo tokenInfo = jwtProvider.generateToken(authentication);
         return tokenInfo;
+    }
+
+    public List<AdminDto.TableDto> getAllPosts() {
+        return postRepository.findAll()
+                .stream()
+                .map(Post::toTableDto)
+                .toList();
+    }
+    public List<AdminDto.TableDto> getAllProjects() {
+        return projectRepository.findAll()
+                .stream()
+                .map(Project::toTableDto)
+                .toList();
     }
 }

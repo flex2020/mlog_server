@@ -1,5 +1,6 @@
 package com.web.mlog_server.mvc.project.model;
 
+import com.web.mlog_server.mvc.admin.AdminDto;
 import com.web.mlog_server.mvc.project.ProjectDto;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -86,6 +87,15 @@ public class Project {
                 .duration(duration)
                 .skills(skills)
                 .learning(learning)
+                .build();
+    }
+
+    public AdminDto.TableDto toTableDto() {
+        return AdminDto.TableDto.builder()
+                .id(id)
+                .title(title)
+                .writingTime(writingTime)
+                .visible(visible)
                 .build();
     }
 
