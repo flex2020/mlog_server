@@ -70,6 +70,7 @@ public class ProjectDto {
                     .duration(duration)
                     .skills(skills)
                     .learning(learning)
+                    .writingTime(LocalDateTime.now())
                     .visible(visible)
                     .build();
         }
