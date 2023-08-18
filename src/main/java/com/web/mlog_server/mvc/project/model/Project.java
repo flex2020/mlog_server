@@ -4,6 +4,7 @@ import com.web.mlog_server.mvc.admin.AdminDto;
 import com.web.mlog_server.mvc.project.ProjectDto;
 import jakarta.persistence.*;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ import java.util.List;
         allocationSize = 1
 )
 @NoArgsConstructor
+@Getter
 public class Project {
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PROJECT_SEQ_GEN")
     private Integer id;

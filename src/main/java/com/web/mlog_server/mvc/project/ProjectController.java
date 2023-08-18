@@ -31,8 +31,8 @@ public class ProjectController {
         return projectService.addProject(dto);
     }
     @DeleteMapping("")
-    public boolean projectDelete(@RequestBody ProjectDto.DeleteDto dto) {
-        return projectService.deleteProject(dto);
+    public boolean changeVisibility(@RequestBody ProjectDto.DeleteDto dto) {
+        return projectService.changeVisibility(dto);
     }
     @PutMapping("")
     public boolean projectModify(@RequestBody ProjectDto.ModifyDto dto) {
