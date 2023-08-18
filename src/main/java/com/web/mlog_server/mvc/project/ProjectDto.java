@@ -84,6 +84,7 @@ public class ProjectDto {
         private Integer id;
         private String title;
         private String content;
+        private String summary;
         private String thumbnail;
         private String duration;
         private String skills;

@@ -100,10 +100,10 @@ public class Project {
     }
 
     public void modifyProject(ProjectDto.ModifyDto dto) {
-        id = dto.getId();
         title = dto.getTitle();
         content = dto.getContent();
         thumbnail = dto.getThumbnail();
+        summary = dto.getSummary();
         duration = dto.getDuration();
         skills = dto.getSkills();
         learning = dto.getLearning();
