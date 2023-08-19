@@ -58,7 +58,6 @@ public class ProjectService {
     @Transactional
     public boolean modifyProject(ProjectDto.ModifyDto dto) {
         try {
-            log.info("{}", dto);
             Project project = projectRepository.findById(dto.getId())
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 프로젝트입니다."));
             project.modifyProject(dto);
