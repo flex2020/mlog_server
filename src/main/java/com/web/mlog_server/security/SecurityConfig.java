@@ -34,7 +34,7 @@ public class SecurityConfig {
                 })
                 .logout(httpSecurityLogoutConfigurer -> {
                     httpSecurityLogoutConfigurer
-                            .logoutUrl("/admin/logout")
+                            .logoutUrl("/api/admin/logout")
                             .logoutSuccessHandler(((request, response, authentication) -> {
                                  response.setStatus(HttpStatus.OK.value());
                             }))

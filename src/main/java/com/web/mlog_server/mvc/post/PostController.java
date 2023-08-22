@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @RestController
-@RequestMapping("/post")
+@RequestMapping("/api/post")
 @Slf4j
 @RequiredArgsConstructor
 public class PostController {
