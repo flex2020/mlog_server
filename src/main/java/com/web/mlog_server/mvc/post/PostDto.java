@@ -1,10 +1,12 @@
 package com.web.mlog_server.mvc.post;
 
 import com.web.mlog_server.mvc.post.model.Post;
+import com.web.mlog_server.mvc.post.model.PostFile;
 import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class PostDto {
     @Data
@@ -45,15 +47,17 @@ public class PostDto {
         private String content;
         private String previewContent;
         private String thumbnail;
+        private List<String> fileList;
         private Boolean visible;
 
-        public Post toEntity() {
+        public Post toEntity(List<PostFile> fileList) {
             return Post.builder()
                     .title(title)
                     .content(content)
                     .previewContent(previewContent)
                     .writingTime(LocalDateTime.now())
                     .thumbnail(thumbnail)
+                    .fileList(fileList)
                     .visible(visible)
                     .build();
         }
@@ -68,6 +72,8 @@ public class PostDto {
         private String title;
         private String content;
         private String previewContent;
+        private String thumbnail;
+        private List<String> fileList;
         private Boolean visible;
     }
 }

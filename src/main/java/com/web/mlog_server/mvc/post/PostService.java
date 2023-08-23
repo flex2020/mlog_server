@@ -43,9 +43,14 @@ public class PostService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 포스트입니다."))
                 .toDetailDto();
     }
+    @Transactional
     public boolean addPost(PostDto.AddDto dto) {
         try {
-            postRepository.save(dto.toEntity());
+            List<PostFile> fileList = postFileRepository.findAllById(dto.getFileList());
+            Post post = postRepository.save(dto.toEntity(fileList));
+            for (PostFile postFile : fileList) {
+                postFile.setPost(post);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "포스트 업로드에 실패하였습니다.");
@@ -71,6 +76,10 @@ public class PostService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 포스트입니다."));
         try {
             post.modifyPost(dto);
+            List<PostFile> fileList = postFileRepository.findAllById(dto.getFileList());
+            for (PostFile postFile : fileList) {
+                postFile.setPost(post);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "포스트 수정에 실패했습니다.");

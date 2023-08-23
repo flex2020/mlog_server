@@ -40,7 +40,7 @@ public class Post {
     @CreationTimestamp
     private LocalDateTime writingTime;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<PostFile> fileList = new ArrayList<>();
 
     @Column(nullable = false)

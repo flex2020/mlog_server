@@ -37,4 +37,8 @@ public class PostFile {
         this.fileSize = fileSize;
         this.post = post;
     }
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
 }
