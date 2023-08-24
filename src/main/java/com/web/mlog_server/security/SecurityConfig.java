@@ -44,7 +44,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
                             authorizationManagerRequestMatcherRegistry
                                     // 모든 사용자 가능
-                                    .requestMatchers(HttpMethod.GET, "/api/post", "/api/post/**", "/api/project", "/api/project/**", "/files/**").permitAll()
+                                    .requestMatchers(HttpMethod.GET, "/api/post", "/api/post/**", "/api/project", "/api/project/**", "/api/files/**").permitAll()
                                     .requestMatchers(HttpMethod.POST, "/api/admin/login").permitAll()
                                     // 관리자 로그인한 사용자만 가능
                                     .requestMatchers(HttpMethod.GET).hasAnyRole("ADMIN")
