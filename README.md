@@ -55,6 +55,7 @@ $ git clone http://github.com/flex2020/mlog_server.git
 
 2. `IntelliJ`를 실행시킨 후 프로젝트 폴더를 Open 해주세요.
 3. IntelliJ에서 `src/main/resources`폴더에 `application.yml`파일을 생성하고 아래의 내용을 입력해주세요.
+4. DB에서 `mlog` 데이터베이스를 생성해주세요. (문자 인코딩은 utf8-unicode-ci로 선택해주세요.)
 
 ```yaml
 server:
