@@ -2,6 +2,7 @@ package com.web.mlog_server.mvc.admin;
 
 import com.web.mlog_server.mvc.admin.model.Admin;
 import com.web.mlog_server.mvc.admin.model.AdminRepository;
+import com.web.mlog_server.mvc.post.PostDto;
 import com.web.mlog_server.mvc.post.model.Post;
 import com.web.mlog_server.mvc.post.model.PostRepository;
 import com.web.mlog_server.mvc.project.model.Project;
@@ -16,6 +17,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
@@ -57,5 +59,10 @@ public class AdminService {
                 .stream()
                 .map(Project::toTableDto)
                 .toList();
+    }
+    public PostDto.DetailDto getPostDetail(Integer id) {
+        return postRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 포스트입니다."))
+                .toDetailDto();
     }
 }

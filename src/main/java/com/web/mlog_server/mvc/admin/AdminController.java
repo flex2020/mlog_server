@@ -1,5 +1,6 @@
 package com.web.mlog_server.mvc.admin;
 
+import com.web.mlog_server.mvc.post.PostDto;
 import com.web.mlog_server.security.TokenInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,5 +34,10 @@ public class AdminController {
     @GetMapping("/projectList")
     public List<AdminDto.TableDto> getAllProjects() {
         return adminService.getAllProjects();
+    }
+
+    @GetMapping("/post/{id}")
+    public PostDto.DetailDto getPostDetail(@PathVariable("id") Integer id) {
+        return adminService.getPostDetail(id);
     }
 }
