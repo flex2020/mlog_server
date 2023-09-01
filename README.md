@@ -104,7 +104,7 @@ path:
   ubuntu: file:///home/ubuntu/mlog/resource/
 ```
 
-4. `Shift + F10` 단축키를 이용해 어플리케이션을 실행해주세요.
+4. IntelliJ에서 `Shift + F10` 단축키를 이용해 어플리케이션을 실행해주세요.
 
 ## 🛠 기술 스택
 
