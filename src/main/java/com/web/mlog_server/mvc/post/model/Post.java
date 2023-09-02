@@ -43,10 +43,6 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<PostFile> fileList = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seriesName")
-    private PostSeries postSeries;
-
     @Column(nullable = false)
     private Boolean visible;
 
