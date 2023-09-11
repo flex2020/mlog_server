@@ -99,7 +99,7 @@ jwt:
 path:
   original: /home/ubuntu/mlog/resource/original/
   thumbnail: /home/ubuntu/mlog/resource/thumbnail/
-  connect: /files/**
+  connect: /api/files/**
   window: file:///C:/home/ubuntu/mlog/resource/
   ubuntu: file:///home/ubuntu/mlog/resource/
 ```
