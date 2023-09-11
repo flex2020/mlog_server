@@ -37,9 +37,9 @@
 
 ## 📃 API 명세
 
-API 명세는 아직 작성되지 않았습니다.
+API 명세는 미완성 입니다.
 
-[API 명세보기]()
+[API 명세보기](https://github.com/flex2020/mlog_server/blob/master/document/api.md)
 
 ## 👉 시작 가이드
 ### 요구 사항
