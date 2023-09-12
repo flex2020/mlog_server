@@ -29,9 +29,9 @@
 포스트와 프로젝트 모두 작성은 관리자 로그인을 통해 권한을 얻고 이용이 가능합니다.
 
 ## 📌 데이터베이스 설계
-![image](https://github.com/flex2020/mlog_server/assets/61104736/6ee07f07-e17f-4aab-bea4-a5ecf0879bc5)
+![image](https://github.com/flex2020/mlog_server/assets/61104736/8b99da6c-84cb-4a43-9c20-d546c8ff2221)
 
-2023-08-10 기준 데이터베이스 구조입니다.
+2023-09-12 기준 데이터베이스 구조입니다.
 
 데이터베이스 구조는 개발 중 컬럼이 추가되거나 변경될 가능성이 있습니다.
 
