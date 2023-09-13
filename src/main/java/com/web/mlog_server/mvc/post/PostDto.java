@@ -4,12 +4,14 @@ import com.web.mlog_server.mvc.post.model.Post;
 import com.web.mlog_server.mvc.post.model.PostFile;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class PostDto {
     @Data
+    @NoArgsConstructor
     public static class ListDto {
         private Integer id;
         private String title;
