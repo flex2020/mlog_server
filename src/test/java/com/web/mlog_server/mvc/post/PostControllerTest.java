@@ -59,4 +59,24 @@ class PostControllerTest {
                 .andExpect(jsonPath("$[0].thumbnail").exists())
                 .andExpect(jsonPath("$[0].writingTime").exists());
     }
+    @Test
+    @DisplayName("포스트 상세보기")
+    void 포스트_상세보기() throws Exception {
+        PostDto.DetailDto dto = PostDto.DetailDto.builder()
+                .id(1)
+                .title("포스트 제목")
+                .content("포스트 본문 내용")
+                .writingTime(LocalDateTime.now())
+                .build();
+
+        given(postService.getPostDetail(1)).willReturn(dto);
+
+        mockMvc.perform(get("/api/post/1")
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").exists())
+                .andExpect(jsonPath("$.title").exists())
+                .andExpect(jsonPath("$.content").exists())
+                .andExpect(jsonPath("$.writingTime").exists());
+    }
 }
