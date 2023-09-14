@@ -44,6 +44,7 @@ public class PostDto {
         }
     }
     @Data
+    @NoArgsConstructor
     public static class AddDto {
         private String title;
         private String content;
@@ -62,6 +63,15 @@ public class PostDto {
                     .fileList(fileList)
                     .visible(visible)
                     .build();
+        }
+        @Builder
+        public AddDto(String title, String content, String previewContent, String thumbnail, List<String> fileList, Boolean visible) {
+            this.title = title;
+            this.content = content;
+            this.previewContent = previewContent;
+            this.thumbnail = thumbnail;
+            this.fileList = fileList;
+            this.visible = visible;
         }
     }
     @Data

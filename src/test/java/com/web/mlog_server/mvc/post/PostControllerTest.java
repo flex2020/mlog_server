@@ -17,6 +17,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -37,7 +38,7 @@ class PostControllerTest {
 
     @Test
     @DisplayName("포스트 전체 목록 불러오기")
-    void 포스트목록() throws Exception {
+    void 포스트_목록() throws Exception {
         List<PostDto.ListDto> list = new ArrayList<>();
         PostDto.ListDto dto = PostDto.ListDto.builder()
                 .id(1)
@@ -78,5 +79,25 @@ class PostControllerTest {
                 .andExpect(jsonPath("$.title").exists())
                 .andExpect(jsonPath("$.content").exists())
                 .andExpect(jsonPath("$.writingTime").exists());
+    }
+    @Test
+    @DisplayName("포스트 상세보기")
+    void 포스트_등록() throws Exception {
+        PostDto.AddDto dto = PostDto.AddDto.builder()
+                .title("포스트 제목")
+                .content("포스트 본문 내용")
+                .previewContent("포스트 미리보기 내용")
+                .thumbnail("썸네일 경로")
+                .fileList(new ArrayList<>())
+                .visible(true)
+                .build();
+
+        given(postService.addPost(dto)).willReturn(true);
+
+        mockMvc.perform(post("/api/post")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsBytes(dto))
+        )
+                .andExpect(status().isOk());
     }
 }
