@@ -58,7 +58,7 @@ public class PostService {
         return true;
     }
     @Transactional
-    public boolean deletePost(int id) {
+    public boolean changeVisibility(int id) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 포스트입니다."));
         try {

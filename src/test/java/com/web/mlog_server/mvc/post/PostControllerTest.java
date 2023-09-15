@@ -81,7 +81,7 @@ class PostControllerTest {
                 .andExpect(jsonPath("$.writingTime").exists());
     }
     @Test
-    @DisplayName("포스트 상세보기")
+    @DisplayName("포스트 등록")
     void 포스트_등록() throws Exception {
         PostDto.AddDto dto = PostDto.AddDto.builder()
                 .title("포스트 제목")
@@ -98,6 +98,19 @@ class PostControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsBytes(dto))
         )
+                .andExpect(status().isOk());
+    }
+    @Test
+    @DisplayName("포스트 공개여부 변경")
+    void 포스트_공개여부_변경() throws Exception {
+        PostDto.DeleteDto dto = new PostDto.DeleteDto(1);
+
+        given(postService.changeVisibility(1)).willReturn(true);
+
+        mockMvc.perform(post("/api/post")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsBytes(dto))
+                )
                 .andExpect(status().isOk());
     }
 }

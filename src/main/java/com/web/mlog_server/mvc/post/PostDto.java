@@ -75,8 +75,13 @@ public class PostDto {
         }
     }
     @Data
+    @NoArgsConstructor
     public static class DeleteDto {
         private Integer id;
+
+        public DeleteDto(Integer id) {
+            this.id = id;
+        }
     }
     @Data
     public static class ModifyDto {
