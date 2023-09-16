@@ -16,8 +16,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -108,6 +107,28 @@ class PostControllerTest {
         given(postService.changeVisibility(1)).willReturn(true);
 
         mockMvc.perform(post("/api/post")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsBytes(dto))
+                )
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("포스트 수정")
+    void 포스트_수정() throws Exception {
+        PostDto.ModifyDto dto = PostDto.ModifyDto.builder()
+                .id(1)
+                .title("수정된 제목")
+                .content("수정된 본문 내용")
+                .previewContent("수정된 미리보기 내용")
+                .thumbnail("썸네일 경로")
+                .fileList(new ArrayList<>())
+                .visible(true)
+                .build();
+
+        given(postService.modifyPost(dto)).willReturn(true);
+
+        mockMvc.perform(put("/api/post")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsBytes(dto))
                 )

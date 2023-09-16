@@ -84,6 +84,7 @@ public class PostDto {
         }
     }
     @Data
+    @NoArgsConstructor
     public static class ModifyDto {
         private Integer id;
         private String title;
@@ -92,5 +93,16 @@ public class PostDto {
         private String thumbnail;
         private List<String> fileList;
         private Boolean visible;
+
+        @Builder
+        public ModifyDto(Integer id, String title, String content, String previewContent, String thumbnail, List<String> fileList, Boolean visible) {
+            this.id = id;
+            this.title = title;
+            this.content = content;
+            this.previewContent = previewContent;
+            this.thumbnail = thumbnail;
+            this.fileList = fileList;
+            this.visible = visible;
+        }
     }
 }
