@@ -59,5 +59,24 @@ class ProjectControllerTest {
         )
                 .andExpect(status().isOk());
     }
+    @Test
+    @DisplayName("프로젝트 상세보기")
+    void 프로젝트_상세보기() throws Exception {
+        ProjectDto.DetailDto dto = ProjectDto.DetailDto.builder()
+                .id(1)
+                .title("프로젝트 제목")
+                .content("프로젝트 본문 내용")
+                .summary("프로젝트 요약")
+                .learning("프로젝트에서 배운 점")
+                .skills("프로젝트에서 사용한 기술들")
+                .duration("프로젝트 진행기간")
+                .build();
+
+        given(projectService.getProjectDetail(1)).willReturn(dto);
+
+        mockMvc.perform(get("/api/project/1")
+                )
+                .andExpect(status().isOk());
+    }
 
 }
