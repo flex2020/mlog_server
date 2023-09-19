@@ -3,6 +3,7 @@ package com.web.mlog_server.mvc.project;
 import com.web.mlog_server.mvc.project.model.Project;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -51,6 +52,7 @@ public class ProjectDto {
         }
     }
     @Data
+    @NoArgsConstructor
     public static class AddDto {
         private String title;
         private String content;
@@ -60,6 +62,18 @@ public class ProjectDto {
         private String learning;
         private String summary;
         private Boolean visible;
+
+        @Builder
+        public AddDto(String title, String content, String thumbnail, String duration, String skills, String learning, String summary, Boolean visible) {
+            this.title = title;
+            this.content = content;
+            this.thumbnail = thumbnail;
+            this.duration = duration;
+            this.skills = skills;
+            this.learning = learning;
+            this.summary = summary;
+            this.visible = visible;
+        }
 
         public Project toEntity() {
             return Project.builder()

@@ -79,4 +79,27 @@ class ProjectControllerTest {
                 .andExpect(status().isOk());
     }
 
+    @Test
+    @DisplayName("프로젝트 등록")
+    void 프로젝트_등록() throws Exception {
+        ProjectDto.AddDto dto = ProjectDto.AddDto.builder()
+                .title("프로젝트 제목")
+                .content("프로젝트 본문 내용")
+                .thumbnail("프로젝트 썸네일 경로")
+                .duration("프로젝트 진행 기간")
+                .skills("프로젝트에서 사용한 기술들")
+                .learning("프로젝트에서 배운 점")
+                .summary("프로젝트 요약")
+                .visible(true)
+                .build();
+
+        given(projectService.addProject(dto)).willReturn(true);
+
+        mockMvc.perform(post("/api/project")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsBytes(dto))
+                )
+                .andExpect(status().isOk());
+    }
+
 }
