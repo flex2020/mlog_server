@@ -101,5 +101,43 @@ class ProjectControllerTest {
                 )
                 .andExpect(status().isOk());
     }
+    @Test
+    @DisplayName("프로젝트 공개여부 변경")
+    void 프로젝트_공개여부_변경() throws Exception {
+        ProjectDto.DeleteDto dto = ProjectDto.DeleteDto.builder()
+                .id(1)
+                .build();
 
+        given(projectService.changeVisibility(dto)).willReturn(true);
+
+        mockMvc.perform(post("/api/project")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsBytes(dto))
+                )
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("프로젝트 수정")
+    void 프로젝트_수정() throws Exception {
+        ProjectDto.ModifyDto dto = ProjectDto.ModifyDto.builder()
+                .id(1)
+                .title("프로젝트 제목")
+                .content("프로젝트 본문 내용")
+                .thumbnail("프로젝트 썸네일 경로")
+                .duration("프로젝트 진행 기간")
+                .skills("프로젝트에서 사용한 기술들")
+                .learning("프로젝트에서 배운 점")
+                .summary("프로젝트 요약")
+                .visible(true)
+                .build();
+
+        given(projectService.modifyProject(dto)).willReturn(true);
+
+        mockMvc.perform(put("/api/project")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsBytes(dto))
+                )
+                .andExpect(status().isOk());
+    }
 }

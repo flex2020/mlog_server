@@ -90,10 +90,16 @@ public class ProjectDto {
         }
     }
     @Data
+    @NoArgsConstructor
     public static class DeleteDto {
         private Integer id;
+        @Builder
+        public DeleteDto(Integer id) {
+            this.id = id;
+        }
     }
     @Data
+    @NoArgsConstructor
     public static class ModifyDto {
         private Integer id;
         private String title;
@@ -104,6 +110,19 @@ public class ProjectDto {
         private String skills;
         private String learning;
         private Boolean visible;
+
+        @Builder
+        public ModifyDto(Integer id, String title, String content, String summary, String thumbnail, String duration, String skills, String learning, Boolean visible) {
+            this.id = id;
+            this.title = title;
+            this.content = content;
+            this.summary = summary;
+            this.thumbnail = thumbnail;
+            this.duration = duration;
+            this.skills = skills;
+            this.learning = learning;
+            this.visible = visible;
+        }
     }
 
 
