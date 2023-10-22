@@ -31,10 +31,7 @@ jobs:
     - name: Make application.yml
       run: |
         mkdir -p ./src/main/resources
-        cd ./src/main/resources
-        touch ./application.yml
-        echo "${{ secrets.DATABASE_PROPERTIES }}" >> ./application.yml
-        shell: bash
+        echo "${{ secrets.APPLICATION_PROPERTIES }}" > ./src/main/resources/application.yml
     - uses: getong/mariadb-action@v1.1
       with:
         host port: 3306
