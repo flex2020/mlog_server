@@ -1,6 +1,9 @@
 package com.web.mlog_server.mvc.project;
 
+import com.web.mlog_server.common.FileUtil;
+import com.web.mlog_server.mvc.post.model.PostFile;
 import com.web.mlog_server.mvc.project.model.Project;
+import com.web.mlog_server.mvc.project.model.ProjectFile;
 import com.web.mlog_server.mvc.project.model.ProjectFileRepository;
 import com.web.mlog_server.mvc.project.model.ProjectRepository;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -18,6 +22,7 @@ import java.util.List;
 public class ProjectService {
     private final ProjectRepository projectRepository;
     private final ProjectFileRepository projectFileRepository;
+    private final FileUtil fileUtil;
 
     public List<ProjectDto.ListDto> getPreviewPost() {
         return projectRepository.findTop3ByVisibleIsTrueOrderByIdDesc()
@@ -36,9 +41,14 @@ public class ProjectService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 프로젝트입니다."))
                 .toDetailDto();
     }
+    @Transactional
     public boolean addProject(ProjectDto.AddDto dto) {
         try {
-            projectRepository.save(dto.toEntity());
+            List<ProjectFile> fileList = projectFileRepository.findAllById(dto.getFileList());
+            Project project = projectRepository.save(dto.toEntity());
+            for (ProjectFile projectFile: fileList) {
+                projectFile.setProject(project);
+            }
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "프로젝트 업로드에 실패했습니다.");
         }
@@ -66,5 +76,12 @@ public class ProjectService {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "프로젝트 수정에 실패했습니다.");
         }
         return true;
+    }
+    public String uploadFile(MultipartFile file) {
+        ProjectFile projectFile = fileUtil.getProjectFile(file);
+        projectFileRepository.save(projectFile);
+        fileUtil.uploadFile(file, projectFile.getFileName());
+
+        return projectFile.getFileName();
     }
 }

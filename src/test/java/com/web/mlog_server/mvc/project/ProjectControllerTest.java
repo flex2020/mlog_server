@@ -85,6 +85,7 @@ class ProjectControllerTest {
         ProjectDto.AddDto dto = ProjectDto.AddDto.builder()
                 .title("프로젝트 제목")
                 .content("프로젝트 본문 내용")
+                .fileList(new ArrayList<>())
                 .thumbnail("프로젝트 썸네일 경로")
                 .duration("프로젝트 진행 기간")
                 .skills("프로젝트에서 사용한 기술들")

@@ -4,6 +4,7 @@ import com.web.mlog_server.mvc.project.model.Project;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -37,5 +38,9 @@ public class ProjectController {
     @PutMapping("")
     public boolean projectModify(@RequestBody ProjectDto.ModifyDto dto) {
         return projectService.modifyProject(dto);
+    }
+    @PostMapping("/file")
+    public String fileUpload(MultipartFile file) {
+        return projectService.uploadFile(file);
     }
 }

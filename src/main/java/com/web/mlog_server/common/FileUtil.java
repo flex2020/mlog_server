@@ -1,6 +1,7 @@
 package com.web.mlog_server.common;
 
 import com.web.mlog_server.mvc.post.model.PostFile;
+import com.web.mlog_server.mvc.project.model.ProjectFile;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -27,6 +28,26 @@ public class FileUtil {
             String fileName = uuid + "." + fileExtension;
 
             return PostFile.builder()
+                    .uuid(uuid)
+                    .mimeType(multipartFile.getContentType())
+                    .originalFileName(originalFilename)
+                    .fileName(fileName)
+                    .fileSize(multipartFile.getSize())
+                    .build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "파일 업로드에 실패했습니다.");
+        }
+    }
+    public ProjectFile getProjectFile(MultipartFile multipartFile) {
+        // DB에 저장하기 위해 파일의 정보를 얻음
+        try {
+            String uuid = UUID.randomUUID().toString();
+            String originalFilename = multipartFile.getOriginalFilename();
+            String fileExtension = originalFilename.substring(originalFilename.lastIndexOf(".")+1);
+            String fileName = uuid + "." + fileExtension;
+
+            return ProjectFile.builder()
                     .uuid(uuid)
                     .mimeType(multipartFile.getContentType())
                     .originalFileName(originalFilename)

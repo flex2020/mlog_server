@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class ProjectDto {
     @Data
@@ -56,6 +57,7 @@ public class ProjectDto {
     public static class AddDto {
         private String title;
         private String content;
+        private List<String> fileList;
         private String thumbnail;
         private String duration;
         private String skills;
@@ -64,9 +66,10 @@ public class ProjectDto {
         private Boolean visible;
 
         @Builder
-        public AddDto(String title, String content, String thumbnail, String duration, String skills, String learning, String summary, Boolean visible) {
+        public AddDto(String title, String content, List<String> fileList, String thumbnail, String duration, String skills, String learning, String summary, Boolean visible) {
             this.title = title;
             this.content = content;
+            this.fileList = fileList;
             this.thumbnail = thumbnail;
             this.duration = duration;
             this.skills = skills;
