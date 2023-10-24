@@ -107,6 +107,7 @@ public class ProjectDto {
         private Integer id;
         private String title;
         private String content;
+        private List<String> fileList;
         private String summary;
         private String thumbnail;
         private String duration;
@@ -115,10 +116,11 @@ public class ProjectDto {
         private Boolean visible;
 
         @Builder
-        public ModifyDto(Integer id, String title, String content, String summary, String thumbnail, String duration, String skills, String learning, Boolean visible) {
+        public ModifyDto(Integer id, String title, String content, List<String> fileList, String summary, String thumbnail, String duration, String skills, String learning, Boolean visible) {
             this.id = id;
             this.title = title;
             this.content = content;
+            this.fileList = fileList;
             this.summary = summary;
             this.thumbnail = thumbnail;
             this.duration = duration;
