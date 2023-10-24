@@ -28,7 +28,20 @@ jobs:
       with:
         java-version: '18'
         distribution: 'temurin'
-    - name: Build with Gradle
-      uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
+    - name: Make application.yml
+      run: |
+        mkdir -p ./src/main/resources
+        echo "${{ secrets.APPLICATION_PROPERTIES }}" > ./src/main/resources/application.yml
+    - uses: getong/mariadb-action@v1.1
       with:
-        arguments: build
+        host port: 3306
+        container port: 3306
+        character set server: 'utf8mb4'
+        collation server: 'utf8_unicode_ci'
+        mariadb version: '10.6.12'
+        mysql database: 'mlog'
+        mysql root password: ${{ secrets.MARIADB_PASSWORD }}
+    - name: Run chmod to make gradlew executable
+      run: chmod +x ./gradlew
+    - name: Build with Gradle
+      run: ./gradlew clean --stacktrace --info build
