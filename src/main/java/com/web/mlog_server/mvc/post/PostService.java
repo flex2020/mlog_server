@@ -1,10 +1,7 @@
 package com.web.mlog_server.mvc.post;
 
 import com.web.mlog_server.common.FileUtil;
-import com.web.mlog_server.mvc.post.model.Post;
-import com.web.mlog_server.mvc.post.model.PostFile;
-import com.web.mlog_server.mvc.post.model.PostFileRepository;
-import com.web.mlog_server.mvc.post.model.PostRepository;
+import com.web.mlog_server.mvc.post.model.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -24,20 +21,23 @@ import java.util.List;
 public class PostService {
     private final PostRepository postRepository;
     private final PostFileRepository postFileRepository;
+    private final PostSeriesRepository postSeriesRepository;
     private final FileUtil fileUtil;
 
+    @Transactional(readOnly = true)
     public List<PostDto.ListDto> getPreviewPost() {
         return postRepository.findTop3ByVisibleIsTrueOrderByIdDesc()
                 .stream()
                 .map(Post::toListDto)
                 .toList();
     }
-
+    @Transactional(readOnly = true)
     public List<PostDto.ListDto> getPostList() {
         return postRepository.findAllByVisibleIsTrueOrderByIdDesc()
                 .stream().map(Post::toListDto)
                 .toList();
     }
+    @Transactional(readOnly = true)
     public PostDto.DetailDto getPostDetail(int id) {
         return postRepository.findByIdAndVisibleIsTrue(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 포스트입니다."))
@@ -47,9 +47,15 @@ public class PostService {
     public boolean addPost(PostDto.AddDto dto) {
         try {
             List<PostFile> fileList = postFileRepository.findAllById(dto.getFileList());
-            Post post = postRepository.save(dto.toEntity(fileList));
+            Post post = dto.toEntity(fileList);
+            if (dto.getSeries() != null) {
+                PostSeries postSeries = postSeriesRepository.findBySeries(dto.getSeries())
+                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                post.updatePostSeries(postSeries);
+            }
+            Post save = postRepository.save(post);
             for (PostFile postFile : fileList) {
-                postFile.setPost(post);
+                postFile.setPost(save);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -76,6 +82,22 @@ public class PostService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 포스트입니다."));
         try {
             post.modifyPost(dto);
+            // 시리즈가 있는 기존 포스트의 시리즈를 없애는 경우
+            if ((dto.getSeries() == null || dto.getSeries().equals("")) && post.getPostSeries() != null) {
+                post.updatePostSeries(null);
+            }
+            // 시리즈가 없는 기존 포스트에 시리즈를 추가하는 경우
+            else if (dto.getSeries() != null && !dto.getSeries().equals("") && post.getPostSeries() == null) {
+                PostSeries postSeries = postSeriesRepository.findBySeries(dto.getSeries())
+                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 시리즈입니다."));
+                post.updatePostSeries(postSeries);
+            }
+            // 시리즈가 있는 기존 포스트의 시리즈를 다른 시리즈로 변경하는 경우
+            else if (dto.getSeries() != null && !dto.getSeries().equals("") && post.getPostSeries() != null && !post.getPostSeries().getSeries().equals(dto.getSeries())) {
+                PostSeries postSeries = postSeriesRepository.findBySeries(dto.getSeries())
+                                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 시리즈입니다."));
+                post.updatePostSeries(postSeries);
+            }
             List<PostFile> fileList = postFileRepository.findAllById(dto.getFileList());
             for (PostFile postFile : fileList) {
                 postFile.setPost(post);

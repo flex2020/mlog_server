@@ -43,11 +43,15 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<PostFile> fileList = new ArrayList<>();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_series")
+    private PostSeries postSeries;
+
     @Column(nullable = false)
     private Boolean visible;
 
     @Builder
-    public Post(Integer id, String title, String content, String previewContent, String thumbnail, LocalDateTime writingTime, List<PostFile> fileList, Boolean visible) {
+    public Post(Integer id, String title, String content, String previewContent, String thumbnail, LocalDateTime writingTime, List<PostFile> fileList, PostSeries postSeries, Boolean visible) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -55,16 +59,28 @@ public class Post {
         this.thumbnail = thumbnail;
         this.writingTime = writingTime;
         this.fileList = fileList;
+        this.postSeries = postSeries;
         this.visible = visible;
     }
+
+
 
     public void setVisible(boolean visible) {
         this.visible = visible;
     }
+    public PostDto.PreviewDto toPreviewDto() {
+        return PostDto.PreviewDto.builder()
+                .id(id)
+                .thumbnail(thumbnail)
+                .title(title)
+                .build();
+    }
+
     public PostDto.ListDto toListDto() {
         return PostDto.ListDto.builder()
                 .id(id)
                 .thumbnail(thumbnail)
+                .series(postSeries != null ? postSeries.getSeries() : null)
                 .title(title)
                 .previewContent(previewContent)
                 .writingTime(writingTime)
@@ -75,6 +91,7 @@ public class Post {
         return PostDto.DetailDto.builder()
                 .id(id)
                 .title(title)
+                .series(postSeries != null ? postSeries.getSeries() : null)
                 .content(content)
                 .writingTime(writingTime)
                 .build();
@@ -94,5 +111,9 @@ public class Post {
         this.content = dto.getContent();
         this.previewContent = dto.getPreviewContent();
         this.visible = dto.getVisible();
+    }
+
+    public void updatePostSeries(PostSeries newSeries) {
+        this.postSeries = newSeries;
     }
 }

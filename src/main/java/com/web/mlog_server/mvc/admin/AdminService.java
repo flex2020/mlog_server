@@ -5,12 +5,15 @@ import com.web.mlog_server.mvc.admin.model.AdminRepository;
 import com.web.mlog_server.mvc.post.PostDto;
 import com.web.mlog_server.mvc.post.model.Post;
 import com.web.mlog_server.mvc.post.model.PostRepository;
+import com.web.mlog_server.mvc.post.model.PostSeries;
+import com.web.mlog_server.mvc.post.model.PostSeriesRepository;
 import com.web.mlog_server.mvc.project.model.Project;
 import com.web.mlog_server.mvc.project.model.ProjectRepository;
 import com.web.mlog_server.security.JwtProvider;
 import com.web.mlog_server.security.TokenInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -31,6 +34,7 @@ public class AdminService {
     private final PostRepository postRepository;
     private final ProjectRepository projectRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private final PostSeriesRepository postSeriesRepository;
     private final JwtProvider jwtProvider;
 
     @Transactional
@@ -60,9 +64,56 @@ public class AdminService {
                 .map(Project::toTableDto)
                 .toList();
     }
+    @Transactional(readOnly = true)
     public PostDto.DetailDto getPostDetail(Integer id) {
         return postRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 포스트입니다."))
                 .toDetailDto();
+    }
+    public List<PostDto.SeriesCommonDto> getSeriesList() {
+        return postSeriesRepository.findAll()
+                .stream()
+                .map(PostSeries::toCommonDto)
+                .toList();
+    }
+    public Boolean addSeries(String series) {
+        if (postSeriesRepository.existsBySeries(series)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT);
+        }
+        PostSeries postSeries = PostSeries.builder()
+                .series(series)
+                .build();
+        try {
+            postSeriesRepository.save(postSeries);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return true;
+    }
+    public Boolean deleteSeries(String series) {
+        PostSeries postSeries = postSeriesRepository.findBySeries(series)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        try {
+            postSeriesRepository.delete(postSeries);
+        } catch (DataIntegrityViolationException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return true;
+    }
+    @Transactional
+    public Boolean changeSeries(PostDto.SeriesChangeDto dto) {
+        PostSeries postSeries = postSeriesRepository.findBySeries(dto.getOriginalSeries())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        try {
+            postSeries.setSeries(dto.getNewSeries());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return true;
     }
 }

@@ -35,7 +35,22 @@ public class AdminController {
     public List<AdminDto.TableDto> getAllProjects() {
         return adminService.getAllProjects();
     }
-
+    @GetMapping("/seriesList")
+    public List<PostDto.SeriesCommonDto> getSeriesList() {
+        return adminService.getSeriesList();
+    }
+    @PostMapping("/series")
+    public Boolean addSeries(@RequestBody PostDto.SeriesCommonDto dto) {
+        return adminService.addSeries(dto.getSeries());
+    }
+    @DeleteMapping("/series/{series}")
+    public Boolean deleteSeries(@PathVariable String series) {
+        return adminService.deleteSeries(series);
+    }
+    @PutMapping("/series")
+    public Boolean changeSeries(@RequestBody PostDto.SeriesChangeDto dto) {
+        return adminService.changeSeries(dto);
+    }
     @GetMapping("/post/{id}")
     public PostDto.DetailDto getPostDetail(@PathVariable("id") Integer id) {
         return adminService.getPostDetail(id);
