@@ -22,16 +22,17 @@
 - AWS를 통해 실제 서비스를 배포하고 운영하여 실제 운영단계에서 일어날 수 있는 일들을 경험하기 위함.
 
 ## 📌 시스템 동작 설계
-![다이어그램](https://github.com/flex2020/mlog_server/assets/61104736/dd669b51-ac4a-4f1b-9a52-30aa8cc52265)
+![image](https://github.com/flex2020/mlog_server/assets/61104736/4274e512-ef8c-4dbc-85d4-7707c2ba731a)
+
 
 모든 방문자가 사용가능한 서비스는 포스트 열람과 프로젝트 열람입니다.
 
 포스트와 프로젝트 모두 작성은 관리자 로그인을 통해 권한을 얻고 이용이 가능합니다.
 
 ## 📌 데이터베이스 설계
-![image](https://github.com/flex2020/mlog_server/assets/61104736/8b99da6c-84cb-4a43-9c20-d546c8ff2221)
+![image](https://github.com/flex2020/mlog_server/assets/61104736/c205cb3f-9f86-4044-bcee-f32bd88da6b6)
 
-2023-09-12 기준 데이터베이스 구조입니다.
+2023-10-26 기준 데이터베이스 구조입니다.
 
 데이터베이스 구조는 개발 중 컬럼이 추가되거나 변경될 가능성이 있습니다.
 
@@ -68,7 +69,7 @@ server:
 spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3306/mlog
+    url: jdbc:mariadb://localhost:3306/데이터베이스명
     username: 사용자명
     password: 비밀번호
 
@@ -106,21 +107,11 @@ path:
 
 4. IntelliJ에서 `Shift + F10` 단축키를 이용해 어플리케이션을 실행해주세요.
 
-## 🛠 기술 스택
-
-### IDE 및 Git
-IntelliJ, Git, GitHub
-### 개발
-Java, Spring Boot, Spring Security, JPA, MariaDB
-
-## ⭐ 주요 기능
-- ### 개발 포스트 및 프로젝트 목록 API(모든 사용자)
-  개발 포스트 및 프로젝트 목록 데이터를 클라이언트에게 전송합니다.
-- ### 개발 포스트 및 프로젝트 상세보기 API(모든 사용자)
-  개발 포스트 및 프로젝트 상세보기 데이터를 클라이언트에게 전송합니다.
-- ### 개발 포스트 및 프로젝트 작성(관리자 전용)
-  개발 포스트 및 프로젝트를 작성하여 데이터베이스에 저장합니다.
-- ### 개발 포스트 및 프로젝트 삭제(관리자 전용)
-  개발 포스트 및 프로젝트를 삭제합니다.
-- ### 개발 포스트 및 프로젝트 수정(관리자 전용)
-  개발 포스트 및 프로젝트의 내용을 수정합니다.
+## 🛠 개발 환경
+|용도|기술|
+|---|---|
+|IDE|IntelliJ, SQLyog|
+|형상관리|Git, GitHub|
+|언어|Java (openjdk 18)|
+|프레임워크|스프링부트, Spring Security, JPA|
+|데이터베이스|MariaDB 10.9|
