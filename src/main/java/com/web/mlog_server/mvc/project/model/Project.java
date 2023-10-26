@@ -12,16 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@SequenceGenerator(
-        name =  "PROJECT_SEQ_GEN", // 시퀀스 제너레이터 이름
-        sequenceName = "PROJECT_SEQ", // 시퀀스 이름
-        initialValue = 1,
-        allocationSize = 1
-)
 @NoArgsConstructor
 @Getter
 public class Project {
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PROJECT_SEQ_GEN")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(length = 100, nullable = false)

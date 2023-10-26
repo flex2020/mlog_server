@@ -48,7 +48,7 @@ public class PostService {
         try {
             List<PostFile> fileList = postFileRepository.findAllById(dto.getFileList());
             Post post = dto.toEntity(fileList);
-            if (dto.getSeries() != null) {
+            if (dto.getSeries() != null && !dto.getSeries().equals("")) {
                 PostSeries postSeries = postSeriesRepository.findBySeries(dto.getSeries())
                         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
                 post.updatePostSeries(postSeries);

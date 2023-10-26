@@ -15,15 +15,9 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @Getter
-@SequenceGenerator(
-        name =  "POST_SEQ_GEN", // 시퀀스 제너레이터 이름
-        sequenceName = "POST_SEQ", // 시퀀스 이름
-        initialValue = 1,
-        allocationSize = 1
-)
 public class Post {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "POST_SEQ_GEN")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(length = 100, nullable = false)
