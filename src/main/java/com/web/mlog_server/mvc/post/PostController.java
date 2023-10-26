@@ -48,4 +48,9 @@ public class PostController {
     public String fileUpload(MultipartFile file) {
         return postService.uploadFile(file);
     }
+
+    @GetMapping("/series")
+    public List<PostDto.SeriesCommonDto> getSeriesList() {
+        return postService.getSeriesList();
+    }
 }

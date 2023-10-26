@@ -116,4 +116,11 @@ public class PostService {
 
         return postFile.getFileName();
     }
+
+    public List<PostDto.SeriesCommonDto> getSeriesList() {
+        return postSeriesRepository.findAll()
+                .stream()
+                .map(PostSeries::toCommonDto)
+                .toList();
+    }
 }
