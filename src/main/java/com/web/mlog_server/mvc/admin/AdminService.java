@@ -2,28 +2,21 @@ package com.web.mlog_server.mvc.admin;
 
 import com.web.mlog_server.mvc.admin.model.Admin;
 import com.web.mlog_server.mvc.admin.model.AdminRepository;
-import com.web.mlog_server.mvc.post.PostDto;
-import com.web.mlog_server.mvc.post.model.Post;
 import com.web.mlog_server.mvc.post.model.PostRepository;
-import com.web.mlog_server.mvc.post.model.PostSeries;
-import com.web.mlog_server.mvc.post.model.PostSeriesRepository;
 import com.web.mlog_server.mvc.project.model.Project;
 import com.web.mlog_server.mvc.project.model.ProjectRepository;
 import com.web.mlog_server.security.JwtProvider;
 import com.web.mlog_server.security.TokenInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -31,10 +24,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdminService {
     private final AdminRepository adminRepository;
-    private final PostRepository postRepository;
-    private final ProjectRepository projectRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    private final PostSeriesRepository postSeriesRepository;
     private final JwtProvider jwtProvider;
 
     @Transactional
@@ -48,72 +38,6 @@ public class AdminService {
         Admin admin = adminRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "입력된 정보와 일치하는 사용자가 없습니다."));
         //--- 3. 인증 정보를 기반으로 JWT 생성
-        TokenInfo tokenInfo = jwtProvider.generateToken(authentication);
-        return tokenInfo;
-    }
-
-    public List<AdminDto.TableDto> getAllPosts() {
-        return postRepository.findAll()
-                .stream()
-                .map(Post::toTableDto)
-                .toList();
-    }
-    public List<AdminDto.TableDto> getAllProjects() {
-        return projectRepository.findAll()
-                .stream()
-                .map(Project::toTableDto)
-                .toList();
-    }
-    @Transactional(readOnly = true)
-    public PostDto.DetailDto getPostDetail(Integer id) {
-        return postRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 포스트입니다."))
-                .toDetailDto();
-    }
-    public List<PostDto.SeriesCommonDto> getSeriesList() {
-        return postSeriesRepository.findAll()
-                .stream()
-                .map(PostSeries::toCommonDto)
-                .toList();
-    }
-    public Boolean addSeries(String series) {
-        if (postSeriesRepository.existsBySeries(series)) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT);
-        }
-        PostSeries postSeries = PostSeries.builder()
-                .series(series)
-                .build();
-        try {
-            postSeriesRepository.save(postSeries);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        return true;
-    }
-    public Boolean deleteSeries(String series) {
-        PostSeries postSeries = postSeriesRepository.findBySeries(series)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        try {
-            postSeriesRepository.delete(postSeries);
-        } catch (DataIntegrityViolationException e) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        return true;
-    }
-    @Transactional
-    public Boolean changeSeries(PostDto.SeriesChangeDto dto) {
-        PostSeries postSeries = postSeriesRepository.findBySeries(dto.getOriginalSeries())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        try {
-            postSeries.setSeries(dto.getNewSeries());
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        return true;
+        return jwtProvider.generateToken(authentication);
     }
 }

@@ -2,11 +2,10 @@ package com.web.mlog_server.mvc.post;
 
 import com.web.mlog_server.common.FileUtil;
 import com.web.mlog_server.mvc.post.model.*;
+import com.web.mlog_server.mvc.series.model.PostSeries;
+import com.web.mlog_server.mvc.series.model.PostSeriesRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +22,18 @@ public class PostService {
     private final PostFileRepository postFileRepository;
     private final PostSeriesRepository postSeriesRepository;
     private final FileUtil fileUtil;
-
+    /**
+     * 포스트 목록
+     * */
+    @Transactional(readOnly = true)
+    public List<PostDto.ListDto> getPostList() {
+        return postRepository.findAllByVisibleIsTrueOrderByIdDesc()
+                .stream().map(Post::toListDto)
+                .toList();
+    }
+    /**
+     * 포스트 미리보기
+     * */
     @Transactional(readOnly = true)
     public List<PostDto.ListDto> getPreviewPost() {
         return postRepository.findTop3ByVisibleIsTrueOrderByIdDesc()
@@ -31,18 +41,18 @@ public class PostService {
                 .map(Post::toListDto)
                 .toList();
     }
-    @Transactional(readOnly = true)
-    public List<PostDto.ListDto> getPostList() {
-        return postRepository.findAllByVisibleIsTrueOrderByIdDesc()
-                .stream().map(Post::toListDto)
-                .toList();
-    }
+    /**
+     * 포스트 상세보기
+     * */
     @Transactional(readOnly = true)
     public PostDto.DetailDto getPostDetail(int id) {
         return postRepository.findByIdAndVisibleIsTrue(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 포스트입니다."))
                 .toDetailDto();
     }
+    /**
+     * 포스트 추가
+     * */
     @Transactional
     public boolean addPost(PostDto.AddDto dto) {
         try {
@@ -63,19 +73,37 @@ public class PostService {
         }
         return true;
     }
+    /**
+     * 포스트 삭제
+     * */
+    public boolean deletePost(Integer id) {
+        try {
+            Post post = postRepository.findById(id)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 포스트입니다."));
+            postRepository.delete(post);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "포스트 삭제에 실패하였습니다.");
+        }
+        return true;
+    }
+    /**
+     * 포스트 공개여부 변경
+     * */
     @Transactional
-    public boolean changeVisibility(int id) {
+    public boolean changeVisibility(Integer id) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 포스트입니다."));
         try {
             post.setVisible(!post.getVisible());
         } catch (Exception e) {
             e.printStackTrace();
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "포스트 수정에 실패했습니다.");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "포스트 공개여부 변경에 실패했습니다.");
         }
         return true;
     }
-
+    /**
+     * 포스트 수정
+     * */
     @Transactional
     public boolean modifyPost(PostDto.ModifyDto dto) {
         Post post = postRepository.findById(dto.getId())
@@ -108,7 +136,9 @@ public class PostService {
         }
         return true;
     }
-
+    /**
+     * 포스트 업로드 파일
+     * */
     public String uploadFile(MultipartFile file) {
         PostFile postFile = fileUtil.getPostFile(file);
         postFileRepository.save(postFile);
@@ -116,11 +146,13 @@ public class PostService {
 
         return postFile.getFileName();
     }
-
-    public List<PostDto.SeriesCommonDto> getSeriesList() {
-        return postSeriesRepository.findAll()
+    /**
+     * 포스트 전체 목록
+     * */
+    public List<PostDto.AllDto> getAllPosts() {
+        return postRepository.findAll()
                 .stream()
-                .map(PostSeries::toCommonDto)
+                .map(Post::toAllDto)
                 .toList();
     }
 }

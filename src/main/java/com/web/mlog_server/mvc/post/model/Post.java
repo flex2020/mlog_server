@@ -1,7 +1,7 @@
 package com.web.mlog_server.mvc.post.model;
 
-import com.web.mlog_server.mvc.admin.AdminDto;
 import com.web.mlog_server.mvc.post.PostDto;
+import com.web.mlog_server.mvc.series.model.PostSeries;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -91,8 +91,8 @@ public class Post {
                 .build();
     }
 
-    public AdminDto.TableDto toTableDto() {
-        return AdminDto.TableDto.builder()
+    public PostDto.AllDto toAllDto() {
+        return PostDto.AllDto.builder()
                 .id(id)
                 .title(title)
                 .writingTime(writingTime)

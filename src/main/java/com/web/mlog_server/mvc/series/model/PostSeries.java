@@ -1,6 +1,8 @@
-package com.web.mlog_server.mvc.post.model;
+package com.web.mlog_server.mvc.series.model;
 
 import com.web.mlog_server.mvc.post.PostDto;
+import com.web.mlog_server.mvc.post.model.Post;
+import com.web.mlog_server.mvc.series.SeriesDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -30,8 +32,8 @@ public class PostSeries {
         this.postList = postList;
     }
 
-    public PostDto.SeriesCommonDto toCommonDto() {
-        return PostDto.SeriesCommonDto.builder()
+    public SeriesDto.SeriesCommonDto toCommonDto() {
+        return SeriesDto.SeriesCommonDto.builder()
                 .series(this.series)
                 .build();
     }

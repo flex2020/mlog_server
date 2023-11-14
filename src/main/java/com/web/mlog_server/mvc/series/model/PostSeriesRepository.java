@@ -1,5 +1,6 @@
-package com.web.mlog_server.mvc.post.model;
+package com.web.mlog_server.mvc.series.model;
 
+import com.web.mlog_server.mvc.series.model.PostSeries;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

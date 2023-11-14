@@ -2,8 +2,6 @@ package com.web.mlog_server.mvc.post;
 
 import com.web.mlog_server.mvc.post.model.Post;
 import com.web.mlog_server.mvc.post.model.PostFile;
-import com.web.mlog_server.mvc.post.model.PostSeries;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -129,26 +127,21 @@ public class PostDto {
             this.visible = visible;
         }
     }
+
     @Data
     @NoArgsConstructor
-    public static class SeriesCommonDto {
-        private String series;
+    public static class AllDto {
+        private Integer id;
+        private String title;
+        private LocalDateTime writingTime;
+        private Boolean visible;
 
         @Builder
-        public SeriesCommonDto(String series) {
-            this.series = series;
-        }
-    }
-    @Data
-    @NoArgsConstructor
-    public static class SeriesChangeDto {
-        private String originalSeries;
-        private String newSeries;
-
-        @Builder
-        public SeriesChangeDto(String originalSeries, String newSeries) {
-            this.originalSeries = originalSeries;
-            this.newSeries = newSeries;
+        public AllDto(Integer id, String title, LocalDateTime writingTime, Boolean visible) {
+            this.id = id;
+            this.title = title;
+            this.writingTime = writingTime;
+            this.visible = visible;
         }
     }
 }

@@ -16,43 +16,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdminController {
     private final AdminService adminService;
-
+    /**
+     * 로그인 요청
+     * */
     @PostMapping("/login")
     public TokenInfo login(@RequestBody AdminDto.LoginDto dto) {
         return adminService.login(dto.getId(), dto.getPassword());
     }
-
+    /**
+     * 권한이 있는 사용자인지 확인하기
+     * */
     @PostMapping("/auth")
     public boolean isAuth() {
         return true;
-    }
-
-    @GetMapping("/postList")
-    public List<AdminDto.TableDto> getAllPosts() {
-        return adminService.getAllPosts();
-    }
-    @GetMapping("/projectList")
-    public List<AdminDto.TableDto> getAllProjects() {
-        return adminService.getAllProjects();
-    }
-    @GetMapping("/seriesList")
-    public List<PostDto.SeriesCommonDto> getSeriesList() {
-        return adminService.getSeriesList();
-    }
-    @PostMapping("/series")
-    public Boolean addSeries(@RequestBody PostDto.SeriesCommonDto dto) {
-        return adminService.addSeries(dto.getSeries());
-    }
-    @DeleteMapping("/series/{series}")
-    public Boolean deleteSeries(@PathVariable String series) {
-        return adminService.deleteSeries(series);
-    }
-    @PutMapping("/series")
-    public Boolean changeSeries(@RequestBody PostDto.SeriesChangeDto dto) {
-        return adminService.changeSeries(dto);
-    }
-    @GetMapping("/post/{id}")
-    public PostDto.DetailDto getPostDetail(@PathVariable("id") Integer id) {
-        return adminService.getPostDetail(id);
     }
 }
