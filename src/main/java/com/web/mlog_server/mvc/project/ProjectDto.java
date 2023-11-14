@@ -129,7 +129,20 @@ public class ProjectDto {
             this.visible = visible;
         }
     }
+    @Data
+    @NoArgsConstructor
+    public static class AllDto {
+        private Integer id;
+        private String title;
+        private LocalDateTime writingTime;
+        private Boolean visible;
 
-
-
+        @Builder
+        public AllDto(Integer id, String title, LocalDateTime writingTime, Boolean visible) {
+            this.id = id;
+            this.title = title;
+            this.writingTime = writingTime;
+            this.visible = visible;
+        }
+    }
 }

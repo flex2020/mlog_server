@@ -86,8 +86,8 @@ public class Project {
                 .build();
     }
 
-    public AdminDto.TableDto toTableDto() {
-        return AdminDto.TableDto.builder()
+    public ProjectDto.AllDto toAllDto() {
+        return ProjectDto.AllDto.builder()
                 .id(id)
                 .title(title)
                 .writingTime(writingTime)
