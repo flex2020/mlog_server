@@ -36,7 +36,7 @@ public class PostService {
      * */
     @Transactional(readOnly = true)
     public List<PostDto.ListDto> getPreviewPost() {
-        return postRepository.findTop3ByVisibleIsTrueOrderByIdDesc()
+        return postRepository.findPreviewByFetchJoin()
                 .stream()
                 .map(Post::toListDto)
                 .toList();
