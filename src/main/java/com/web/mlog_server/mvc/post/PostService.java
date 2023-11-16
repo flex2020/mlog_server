@@ -27,7 +27,7 @@ public class PostService {
      * */
     @Transactional(readOnly = true)
     public List<PostDto.ListDto> getPostList() {
-        return postRepository.findAllByVisibleIsTrueOrderByIdDesc()
+        return postRepository.findPostByFetchJoin()
                 .stream().map(Post::toListDto)
                 .toList();
     }
