@@ -35,10 +35,10 @@ public class PostService {
      * 포스트 미리보기
      * */
     @Transactional(readOnly = true)
-    public List<PostDto.ListDto> getPreviewPost() {
-        return postRepository.findPreviewByFetchJoin()
+    public List<PostDto.PreviewDto> getPreviewPost() {
+        return postRepository.findTop3ByVisibleIsTrueOrderByIdDesc()
                 .stream()
-                .map(Post::toListDto)
+                .map(Post::toPreviewDto)
                 .toList();
     }
     /**
@@ -77,9 +77,9 @@ public class PostService {
      * 포스트 삭제
      * */
     public boolean deletePost(Integer id) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 포스트입니다."));
         try {
-            Post post = postRepository.findById(id)
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 포스트입니다."));
             postRepository.delete(post);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "포스트 삭제에 실패하였습니다.");

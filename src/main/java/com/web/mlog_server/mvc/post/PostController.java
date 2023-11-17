@@ -24,7 +24,7 @@ public class PostController {
      * (사용자) 포스트 미리보기
      * */
     @GetMapping("/preview")
-    public List<PostDto.ListDto> getPreviewPost() {
+    public List<PostDto.PreviewDto> getPreviewPost() {
         return postService.getPreviewPost();
     }
     /**

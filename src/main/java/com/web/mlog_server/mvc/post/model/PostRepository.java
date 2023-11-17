@@ -9,8 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Integer> {
-    @Query("select p from Post p left join fetch p.postSeries s where p.visible = true order by p.id desc limit 3")
-    List<Post> findPreviewByFetchJoin();
+    List<Post> findTop3ByVisibleIsTrueOrderByIdDesc();
     @Query("select p from Post p left join fetch p.postSeries s where p.visible = true order by p.id desc")
     List<Post> findPostByFetchJoin();
     Optional<Post> findByIdAndVisibleIsTrue(Integer id);
