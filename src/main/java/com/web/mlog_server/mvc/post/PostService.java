@@ -46,7 +46,7 @@ public class PostService {
      * */
     @Transactional(readOnly = true)
     public PostDto.DetailDto getPostDetail(int id) {
-        return postRepository.findByIdAndVisibleIsTrue(id)
+        return postRepository.findDetailByFetchJoin(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 포스트입니다."))
                 .toDetailDto();
     }

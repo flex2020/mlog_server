@@ -12,5 +12,6 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     List<Post> findTop3ByVisibleIsTrueOrderByIdDesc();
     @Query("select p from Post p left join fetch p.postSeries s where p.visible = true order by p.id desc")
     List<Post> findPostByFetchJoin();
-    Optional<Post> findByIdAndVisibleIsTrue(Integer id);
+    @Query("select p from Post p left join fetch p.postSeries s where p.visible = true and p.id = :id")
+    Optional<Post> findDetailByFetchJoin(Integer id);
 }
